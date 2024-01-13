@@ -2,4 +2,4 @@
 // Created by Michał Zychowicz on 11/01/2024.
 //
 
-#include "genetic.h"
+#include "geneticBase.h"

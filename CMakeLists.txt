@@ -8,10 +8,16 @@ endif(WIN32)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(PEA_Zad3 menu/main.cpp
-        algorithms/genetic.cpp
-        algorithms/genetic.h
+        algorithms/geneticBase.cpp
+        algorithms/geneticBase.h
         data/dataGenerator.cpp
         data/dataGenerator.h
         data/fileOperator.cpp
-        data/fileOperator.h)
+        data/fileOperator.h
+        inheritance/parent.cpp
+        inheritance/parent.h
+        inheritance/childA.cpp
+        inheritance/childA.h
+        inheritance/childB.cpp
+        inheritance/childB.h)
 
