@@ -24,19 +24,21 @@ class genetic {
     int numberOfGenerations = 0; // number of generations
 
     std::vector<std::vector<int>> population; // current population
-    std::vector<int> populationCosts; // costs of the paths in the population
+    std::vector<int> populationCosts = std::vector<int>(populationSize); // costs of the paths in the population
 
-    std::tuple<int, std::vector<int>, std::chrono::duration<float>> bestSolution
+    std::tuple<int, std::vector<int>, std::chrono::duration<float>> bestSolution; // best solution found by the algorithm
 
     std::vector<std::string> betterPathsAndTimes; // vector of better paths and times when they were found
 
     [[nodiscard]] int pathCost(const std::vector<int>& testedPath) const; // calculates the curent path cost
 
+    std::vector<int> mutate(const std::vector<int>& path); // mutates the path
+
 protected:
     genetic(const std::vector<std::vector<int>> &matrix, int stopCriterion, int populationSize, long double crossoverProbability, long double mutationProbability);
     ~genetic() = default;
 
-    virtual void crossing(int parent1, int parent2, int child1, int child2) = 0; // virtual method for crossing, will be implemented in the derived classes
+    virtual std::pair<std::vector<int>, std::vector<int>> crossing(std::vector<int> parent1, std::vector<int> parent2) = 0; // virtual method for crossing, will be implemented in the derived classes
 
 
 
