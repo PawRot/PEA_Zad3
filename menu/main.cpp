@@ -12,6 +12,8 @@ vector<vector<int>> generateData(bool &dataLoaded);
 
 void displayCurrentData(const vector<vector<int>>&data, bool dataLoaded);
 
+void setPopulationSize(int &populationSize);
+
 void setStopCriterion(int &stopCriterion, bool &stopCriterionSet);
 
 void setMutationProbability(long double &mutationProbability);
@@ -28,7 +30,7 @@ vector<int> loadPathFromFile(bool &pathLoaded);
 
 void calculateCost(const vector<vector<int>> &testData, const vector<int> &path, const bool &dataLoaded, const bool &pathLoaded);
 
-void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, const long double &mutationProbability, const int &mutationMethod, const long double &crossProbability, const int &crossingMethod, const bool &dataLoaded, const bool &pathLoaded); // TODO implement starting method
+void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, const long double &mutationProbability, const int &mutationMethod, const long double &crossProbability, const int &crossingMethod, const bool &dataLoaded, bool &pathLoaded); // TODO implement starting method
 
 
 const vector<string> mutationMethods = {"Inversion", "Swap", "Scramble"};
@@ -52,6 +54,8 @@ int main(int argc, char **argv)
     long double crossProbability = 0.01;
     int crossingMethod = 0;
     int mutationMethod = 0;
+
+    int populationSize = 1000;
 
 
     vector<vector<int>> data;
@@ -110,40 +114,45 @@ int main(int argc, char **argv)
                 break;
             case 5:
                 cout << endl;
-                startGeneticAlgorithm(data, path, mutationProbability, mutationMethod, crossProbability, crossingMethod, dataLoaded, pathLoaded);
+                setPopulationSize(populationSize);
                 cout << endl;
                 break;
             case 6:
                 cout << endl;
-                setMutationProbability(mutationProbability);
+                startGeneticAlgorithm(data, path, mutationProbability, mutationMethod, crossProbability, crossingMethod, dataLoaded, pathLoaded);
                 cout << endl;
                 break;
             case 7:
                 cout << endl;
-                setCrossProbability(crossProbability);
+                setMutationProbability(mutationProbability);
                 cout << endl;
                 break;
             case 8:
                 cout << endl;
-                selectCrossingMethod(crossingMethod);
+                setCrossProbability(crossProbability);
                 cout << endl;
                 break;
             case 9:
                 cout << endl;
-                selectMutationMethod(mutationMethod);
+                selectCrossingMethod(crossingMethod);
                 cout << endl;
                 break;
             case 10:
                 cout << endl;
-                savePathToFile(path, pathLoaded);
+                selectMutationMethod(mutationMethod);
                 cout << endl;
                 break;
             case 11:
                 cout << endl;
-                path = loadPathFromFile(pathLoaded);
+                savePathToFile(path, pathLoaded);
                 cout << endl;
                 break;
             case 12:
+                cout << endl;
+                path = loadPathFromFile(pathLoaded);
+                cout << endl;
+                break;
+            case 13:
                 cout << endl;
                 calculateCost(data, path, dataLoaded, pathLoaded);
                 cout << endl;
@@ -160,14 +169,15 @@ void showMenuOptions() {
     cout << "2.  Generate data" << endl;
     cout << "3.  Display current data" << endl;
     cout << "4.  Set stop criterion" << endl;
-    cout << "5.  Start genetic algorithm" << endl;
-    cout << "6.  Set mutation probability" << endl;
-    cout << "7.  Set crossing probability" << endl;
-    cout << "8.  Select crossing method" << endl;
-    cout << "9.  Select mutation method" << endl;
-    cout << "10. Save path to file" << endl;
-    cout << "11. Load data from file" << endl;
-    cout << "12. Calculate path cost" << endl;
+    cout << "5.  Set population size" << endl;
+    cout << "6.  Start genetic algorithm" << endl;
+    cout << "7.  Set mutation probability" << endl;
+    cout << "8.  Set crossing probability" << endl;
+    cout << "9.  Select crossing method" << endl;
+    cout << "10. Select mutation method" << endl;
+    cout << "11. Save path to file" << endl;
+    cout << "12. Load data from file" << endl;
+    cout << "13. Calculate path cost" << endl;
     cout << "0.  Exit" << endl;
 }
 
@@ -289,6 +299,23 @@ void setStopCriterion(int &stopCriterion,bool &stopCriterionSet) {
     std::cout << "Stop criterion set to: " << stopCriterion << std::endl;
     stopCriterionSet = true;
 }
+
+void setPopulationSize(int &populationSize) {
+    std::cout << "Enter desired population size: ";
+    string input;
+    std::cin >> input;
+    int tempSize;
+    try {
+        tempSize = std::stoi(input);
+    } catch (std::invalid_argument &e) {
+        std::cout << "Invalid argument" << std::endl;
+        return;
+    }
+
+    populationSize = tempSize;
+    std::cout << "Population size set to: " << populationSize << std::endl;
+}
+
 
 void setMutationProbability(long double &mutationProbability) {
     std::cout << "Enter mutation probability: ";
@@ -439,8 +466,11 @@ void calculateCost(const vector<vector<int>>&testData, const vector<int>&path, c
     std::cout << "Cost of path: " << cost;
 }
 
-void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, const long double &mutationProbability, const int &mutationMethod, const long double &crossProbability, const int &crossingMethod, const bool &dataLoaded, const bool &pathLoaded) {
+void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, const long double &mutationProbability, const int &mutationMethod, const long double &crossProbability, const int &crossingMethod, const bool &dataLoaded, bool &pathLoaded) {
     // TODO implement starting method
+
+    cout << "Starting genetic algorithm" << endl << endl;
+
     if(!dataLoaded) {
         cout << "Data not loaded" << endl;
         return;
