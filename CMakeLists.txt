@@ -19,5 +19,9 @@ add_executable(PEA_Zad3 menu/main.cpp
         inheritance/childA.cpp
         inheritance/childA.h
         inheritance/childB.cpp
-        inheritance/childB.h)
+        inheritance/childB.h
+        algorithms/geneticOX.cpp
+        algorithms/geneticOX.h
+        algorithms/geneticPMX.cpp
+        algorithms/geneticPMX.h)
 

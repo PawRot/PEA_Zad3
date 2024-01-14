@@ -14,6 +14,8 @@ genetic::genetic(const std::vector<std::vector<int>>& matrix, const int stopCrit
     this->mutationProbability = mutationProbability;
     numberOfCities = static_cast<int>(matrix.size());
 
+    populationCosts = std::vector<int>(populationSize);
+
     for (int i = 0; i < populationSize; i++) {
         std::vector<int> path;
         path.reserve(numberOfCities);
@@ -22,7 +24,7 @@ genetic::genetic(const std::vector<std::vector<int>>& matrix, const int stopCrit
         }
         std::random_device rd;
         std::mt19937 mt(rd());
-        std::shuffle(path.begin(), path.end(), mt);
+        std::ranges::shuffle(path, mt);
         population.push_back(path);
     }
 

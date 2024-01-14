@@ -1,6 +1,8 @@
 #include <iostream>
 #include "../data/fileOperator.h"
 #include "../data/dataGenerator.h"
+#include "../algorithms/geneticOX.h"
+#include "../algorithms/geneticPMX.h"
 
 using std::vector, std::string, std::cout, std::cin, std::endl;
 
@@ -28,7 +30,7 @@ vector<int> loadPathFromFile(bool &pathLoaded);
 
 void calculateCost(const vector<vector<int>> &testData, const vector<int> &path, const bool &dataLoaded, const bool &pathLoaded);
 
-void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, const long double &mutationProbability, const long double &crossProbability, const int &crossingMethod, const bool &dataLoaded, bool &pathLoaded); // TODO implement starting method
+void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, const int &stopCriterion, const int &populationSize, const long double &mutationProbability, const long double &crossProbability, const int &crossingMethod, const bool &dataLoaded, bool &pathLoaded); // TODO implement starting method
 
 
 const vector<string> crossingMethods = {"OX", "PMX"};
@@ -48,7 +50,7 @@ int main(int argc, char **argv)
     bool stopCriterionSet = false;
     int stopCriterion = 0;
     long double mutationProbability = 0.01;
-    long double crossProbability = 0.01;
+    long double crossProbability = 0.8;
     int crossingMethod = 0;
 
     int populationSize = 1000;
@@ -114,7 +116,7 @@ int main(int argc, char **argv)
                 break;
             case 6:
                 cout << endl;
-                startGeneticAlgorithm(data, path, mutationProbability, crossProbability, crossingMethod, dataLoaded, pathLoaded);
+                startGeneticAlgorithm(data, path, stopCriterion, populationSize, mutationProbability, crossProbability, crossingMethod, dataLoaded, pathLoaded);
                 cout << endl;
                 break;
             case 7:
@@ -432,7 +434,7 @@ void calculateCost(const vector<vector<int>>&testData, const vector<int>&path, c
     std::cout << "Cost of path: " << cost;
 }
 
-void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, const long double &mutationProbability, const long double &crossProbability, const int &crossingMethod, const bool &dataLoaded, bool &pathLoaded) {
+void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, const int &stopCriterion, const int &populationSize, const long double &mutationProbability, const long double &crossProbability, const int &crossingMethod, const bool &dataLoaded, bool &pathLoaded) {
     // TODO implement starting method
 
     cout << "Starting genetic algorithm" << endl << endl;
@@ -440,6 +442,26 @@ void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, c
     if(!dataLoaded) {
         cout << "Data not loaded" << endl;
         return;
+    }
+
+    if (crossingMethod == 0) {
+        cout << "OX crossing" << endl;
+        geneticOX geneticOX(data, stopCriterion, populationSize, crossProbability, mutationProbability);
+        // auto result = geneticOX.geneticAlgorithm();
+        auto [pathCost, resultPath, timeElapsed] = geneticOX.geneticAlgorithm();
+        path = resultPath ;
+        cout << "Cost: " << pathCost << endl;
+        cout << "Best path found after: " << std::chrono::duration_cast<std::chrono::seconds>(timeElapsed).count() << " s" << endl;
+        pathLoaded = true;
+    } else {
+        cout << "PMX crossing" << endl;
+        geneticPMX geneticPMX(data, stopCriterion, populationSize, crossProbability, mutationProbability);
+        // auto result = geneticPMX.geneticAlgorithm();
+        auto [pathCost, resultPath, timeElapsed] = geneticPMX.geneticAlgorithm();
+        path = resultPath ;
+        cout << "Cost: " << pathCost << endl;
+        cout << "Best path found after: " << std::chrono::duration_cast<std::chrono::seconds>(timeElapsed).count() << " s" << endl;
+        pathLoaded = true;
     }
 
 }

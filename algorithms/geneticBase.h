@@ -24,7 +24,7 @@ class genetic {
     int numberOfGenerations = 0; // number of generations
 
     std::vector<std::vector<int>> population; // current population
-    std::vector<int> populationCosts = std::vector<int>(populationSize); // costs of the paths in the population
+    std::vector<int> populationCosts; // costs of the paths in the population
 
     std::tuple<int, std::vector<int>, std::chrono::duration<float>> bestSolution; // best solution found by the algorithm
 
@@ -32,7 +32,7 @@ class genetic {
 
     [[nodiscard]] int pathCost(const std::vector<int>& testedPath) const; // calculates the curent path cost
 
-    std::vector<int> mutate(const std::vector<int>& path) const; // mutates the path
+    [[nodiscard]] std::vector<int> mutate(const std::vector<int>& path) const; // mutates the path
 
 protected:
     genetic(const std::vector<std::vector<int>> &matrix, int stopCriterion, int populationSize, long double crossoverProbability, long double mutationProbability);
@@ -52,7 +52,7 @@ public:
         return betterPathsAndTimes;
     }
 
-    [[nodiscard]] int getNumberOfGenerations() const {
+    [[nodiscard]] auto getNumberOfGenerations() const {
         return numberOfGenerations;
     }
 
