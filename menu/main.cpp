@@ -22,19 +22,16 @@ void setCrossProbability(long double &crossProbability);
 
 void selectCrossingMethod(int &crossingMethod);
 
-void selectMutationMethod(int &mutationMethod);
-
 void savePathToFile(const vector<int> &path, const bool &pathLoaded);
 
 vector<int> loadPathFromFile(bool &pathLoaded);
 
 void calculateCost(const vector<vector<int>> &testData, const vector<int> &path, const bool &dataLoaded, const bool &pathLoaded);
 
-void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, const long double &mutationProbability, const int &mutationMethod, const long double &crossProbability, const int &crossingMethod, const bool &dataLoaded, bool &pathLoaded); // TODO implement starting method
+void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, const long double &mutationProbability, const long double &crossProbability, const int &crossingMethod, const bool &dataLoaded, bool &pathLoaded); // TODO implement starting method
 
 
-const vector<string> mutationMethods = {"Inversion", "Swap", "Scramble"};
-const vector<string> crossingMethods = {"OX", "PMX", "CX"};
+const vector<string> crossingMethods = {"OX", "PMX"};
 
 int main(int argc, char **argv)
 {
@@ -53,7 +50,6 @@ int main(int argc, char **argv)
     long double mutationProbability = 0.01;
     long double crossProbability = 0.01;
     int crossingMethod = 0;
-    int mutationMethod = 0;
 
     int populationSize = 1000;
 
@@ -67,7 +63,6 @@ int main(int argc, char **argv)
     do {
         std::cout << "Data loaded: " << (dataLoaded ? "True" : "False") << std::endl;
         std::cout << "Current mutation probability = " << mutationProbability << std::endl;
-        std::cout << "Current mutation method = " << mutationMethods[mutationMethod] << std::endl;
 
         std::cout << "Current crossing probability = " << crossProbability << std::endl;
         std::cout << "Current crossing method = " << crossingMethods[crossingMethod] << std::endl;
@@ -119,7 +114,7 @@ int main(int argc, char **argv)
                 break;
             case 6:
                 cout << endl;
-                startGeneticAlgorithm(data, path, mutationProbability, mutationMethod, crossProbability, crossingMethod, dataLoaded, pathLoaded);
+                startGeneticAlgorithm(data, path, mutationProbability, crossProbability, crossingMethod, dataLoaded, pathLoaded);
                 cout << endl;
                 break;
             case 7:
@@ -139,20 +134,15 @@ int main(int argc, char **argv)
                 break;
             case 10:
                 cout << endl;
-                selectMutationMethod(mutationMethod);
+                savePathToFile(path, pathLoaded);
                 cout << endl;
                 break;
             case 11:
                 cout << endl;
-                savePathToFile(path, pathLoaded);
-                cout << endl;
-                break;
-            case 12:
-                cout << endl;
                 path = loadPathFromFile(pathLoaded);
                 cout << endl;
                 break;
-            case 13:
+            case 12:
                 cout << endl;
                 calculateCost(data, path, dataLoaded, pathLoaded);
                 cout << endl;
@@ -174,10 +164,9 @@ void showMenuOptions() {
     cout << "7.  Set mutation probability" << endl;
     cout << "8.  Set crossing probability" << endl;
     cout << "9.  Select crossing method" << endl;
-    cout << "10. Select mutation method" << endl;
-    cout << "11. Save path to file" << endl;
-    cout << "12. Load data from file" << endl;
-    cout << "13. Calculate path cost" << endl;
+    cout << "10. Save path to file" << endl;
+    cout << "11. Load data from file" << endl;
+    cout << "12. Calculate path cost" << endl;
     cout << "0.  Exit" << endl;
 }
 
@@ -383,29 +372,6 @@ void selectCrossingMethod(int &crossingMethod) {
     std::cout << "Crossing method set to: " << crossingMethod << std::endl;
 }
 
-void selectMutationMethod(int &mutationMethod) {
-    std::cout << "Select mutation method: " << std::endl;
-    for(int i = 0; i < mutationMethods.size(); ++i){
-        std::cout << i + 1 << ". " << mutationMethods[i] << std::endl;
-    }
-    string input;
-    std::cin >> input;
-    int tempMutationMethod;
-    try {
-        tempMutationMethod = std::stoi(input);
-    } catch (std::invalid_argument &e) {
-        std::cout << "Invalid argument" << std::endl;
-        return;
-    }
-
-    if (tempMutationMethod < 1 || tempMutationMethod > mutationMethods.size()) {
-        std::cout << "Invalid argument" << std::endl;
-        return;
-    }
-
-    mutationMethod = tempMutationMethod - 1;
-    std::cout << "Mutation method set to: " << mutationMethod << std::endl;
-}
 
 void savePathToFile(const vector<int> &path, const bool &pathLoaded ) {
     if (!pathLoaded) {
@@ -466,7 +432,7 @@ void calculateCost(const vector<vector<int>>&testData, const vector<int>&path, c
     std::cout << "Cost of path: " << cost;
 }
 
-void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, const long double &mutationProbability, const int &mutationMethod, const long double &crossProbability, const int &crossingMethod, const bool &dataLoaded, bool &pathLoaded) {
+void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, const long double &mutationProbability, const long double &crossProbability, const int &crossingMethod, const bool &dataLoaded, bool &pathLoaded) {
     // TODO implement starting method
 
     cout << "Starting genetic algorithm" << endl << endl;
@@ -475,6 +441,7 @@ void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, c
         cout << "Data not loaded" << endl;
         return;
     }
+
 }
 
 
