@@ -44,6 +44,9 @@ genetic::genetic(const std::vector<std::vector<int>>& matrix, const int stopCrit
 
 std::tuple<int, std::vector<int>, std::chrono::duration<float>> genetic::geneticAlgorithm() {
 
+    std::random_device rd;
+    std::mt19937 mt(rd());
+
 
     std::chrono::duration<float> timeElapsed = std::chrono::duration<float>::zero();
     const auto start = std::chrono::steady_clock::now(); // start time
@@ -63,12 +66,19 @@ std::tuple<int, std::vector<int>, std::chrono::duration<float>> genetic::genetic
         for (int i = 0; i < populationSize; i++) {
             int currentWinnerCost = INT_MAX;
             int currentWinnerIndex = -1;
+            std::vector<int> indexInTournament = {};
 
             for (int k = 0; k < tournamentSize; k++) {
-                std::random_device rd;
-                std::mt19937 mt(rd());
+                // std::random_device rd;
+                // std::mt19937 mt(rd());
                 std::uniform_int_distribution index(0, populationSize - 1);
-                if (const int randomIndex = index(mt); populationCosts[randomIndex] < currentWinnerCost) {
+                int randomIndex = index(mt);
+                while (std::ranges::find(indexInTournament, randomIndex) != indexInTournament.end()) { // if the random index is already in the tournament, generate a new one
+                    randomIndex = index(mt);
+                }
+                indexInTournament.push_back(randomIndex);
+
+                if (populationCosts[randomIndex] < currentWinnerCost) {
                     currentWinnerCost = populationCosts[randomIndex];
                     currentWinnerIndex = randomIndex;
                 }
@@ -82,8 +92,8 @@ std::tuple<int, std::vector<int>, std::chrono::duration<float>> genetic::genetic
 
         // crossover
         for (int i = 0; i < populationSize; i += 2) {
-            std::random_device rd;
-            std::mt19937 mt(rd());
+            // std::random_device rd;
+            // std::mt19937 mt(rd());
             // select two random parents from the parent population
             std::uniform_int_distribution index(0, populationSize - 1);
             const int parent1Index = index(mt);
@@ -102,15 +112,15 @@ std::tuple<int, std::vector<int>, std::chrono::duration<float>> genetic::genetic
         }
 
         if (populationSize % 2 != 0) { // if the population size is odd, add one random path to the new population
-            std::random_device rd;
-            std::mt19937 mt(rd());
+            // std::random_device rd;
+            // std::mt19937 mt(rd());
             std::uniform_int_distribution index(0, populationSize - 1);
             newPopulation.push_back(population[index(mt)]);
         }
 
         for (auto& path : newPopulation) { // mutate the paths
-            std::random_device rd;
-            std::mt19937 mt(rd());
+            // std::random_device rd;
+            // std::mt19937 mt(rd());
             if (std::uniform_real_distribution dist(0.0, 1.0); dist(mt) < mutationProbability) { // if the mutation is to be performed
                 path = mutate(path);
             }
@@ -144,7 +154,37 @@ std::tuple<int, std::vector<int>, std::chrono::duration<float>> genetic::genetic
 
 }
 
-std::vector<int> genetic::mutate(const std::vector<int>& path) {
+std::vector<int> genetic::mutate(const std::vector<int>& path) const {
+
+    // // reciprocal exchange mutation
+    // std::random_device rd;
+    // std::mt19937 mt(rd());
+    // std::uniform_int_distribution index(0, numberOfCities - 1);
+    // const int swapIndex1 = index(mt);
+    // int swapIndex2;
+    // do {
+    //     swapIndex2 = index(mt);
+    // } while (swapIndex1 == swapIndex2); // swapIndex1 and swapIndex2 must be different
+    // std::vector<int> mutatedPath = path;
+    // std::swap(mutatedPath[swapIndex1], mutatedPath[swapIndex2]); // swap two cities
+    // return mutatedPath;
+
+    // inversion mutation
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution index(0, numberOfCities - 1);
+    const int swapIndex1 = index(mt);
+    int swapIndex2;
+    do {
+        swapIndex2 = index(mt);
+    } while (swapIndex1 == swapIndex2); // swapIndex1 and swapIndex2 must be different
+    std::vector<int> mutatedPath = path;
+    if (swapIndex1 < swapIndex2) {
+        std::reverse(mutatedPath.begin() + swapIndex1, mutatedPath.begin() + swapIndex2);
+    } else {
+        std::reverse(mutatedPath.begin() + swapIndex2, mutatedPath.begin() + swapIndex1);
+    }
+    return mutatedPath;
 
 }
 
