@@ -13,6 +13,7 @@
 
 
 class genetic {
+protected:
     std::vector<std::vector<int>> matrix; // data matrix
     std::vector<int> bestPath; // current best path
     int numberOfCities; // number of cities
@@ -34,7 +35,6 @@ class genetic {
 
     [[nodiscard]] std::vector<int> mutate(const std::vector<int>& path) const; // mutates the path
 
-protected:
     genetic(const std::vector<std::vector<int>> &matrix, int stopCriterion, int populationSize, long double crossoverProbability, long double mutationProbability);
     ~genetic() = default;
 

@@ -30,7 +30,7 @@ vector<int> loadPathFromFile(bool &pathLoaded);
 
 void calculateCost(const vector<vector<int>> &testData, const vector<int> &path, const bool &dataLoaded, const bool &pathLoaded);
 
-void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, const int &stopCriterion, const int &populationSize, const long double &mutationProbability, const long double &crossProbability, const int &crossingMethod, const bool &dataLoaded, bool &pathLoaded); // TODO implement starting method
+void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, const int &stopCriterion, const int &populationSize, const long double &mutationProbability, const long double &crossProbability, const int &crossingMethod, const bool &dataLoaded, bool &pathLoaded);
 
 
 const vector<string> crossingMethods = {"OX", "PMX"};
@@ -435,7 +435,6 @@ void calculateCost(const vector<vector<int>>&testData, const vector<int>&path, c
 }
 
 void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, const int &stopCriterion, const int &populationSize, const long double &mutationProbability, const long double &crossProbability, const int &crossingMethod, const bool &dataLoaded, bool &pathLoaded) {
-    // TODO implement starting method
 
     cout << "Starting genetic algorithm" << endl << endl;
 
