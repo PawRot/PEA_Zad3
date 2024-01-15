@@ -10,14 +10,16 @@ geneticPMX::geneticPMX(const std::vector<std::vector<int>>&matrix, const int sto
     populationSize,
     crossoverProbability,
     mutationProbability) {
+
 }
 
 
 std::pair<std::vector<int>, std::vector<int>> geneticPMX::crossing(const std::vector<int> parent1, const std::vector<int> parent2) {
-    // select random range
     std::random_device rd;
     std::mt19937 mt(rd());
     std::uniform_int_distribution<int> dist(0, numberOfCities - 1);
+
+    // select random range
     int rangeStart = dist(mt);
     int rangeEnd;
     do {
@@ -95,7 +97,7 @@ std::pair<std::vector<int>, std::vector<int>> geneticPMX::crossing(const std::ve
     }
 
 
-
+    // TODO Clear up PMX code
     // // Insert genes that are in one parent's range but not in the other
     // for (int i = rangeStart; i <= rangeEnd; i++) {
     //     if (std::find(offspring1.begin() + rangeStart, offspring1.begin() + rangeEnd + 1, parent2[i]) == offspring1.begin() + rangeEnd + 1) {

@@ -19,7 +19,7 @@ protected:
     int numberOfCities; // number of cities
     int populationSize; // size of the population
     int stopCriterion; // stop criterion in seconds
-    int tournamentSize = 5; // size of the tournament
+    int tournamentSize; // size of the tournament
     long double crossoverProbability; // probability of crossover
     long double mutationProbability; // probability of mutation
     int numberOfGenerations = 0; // number of generations

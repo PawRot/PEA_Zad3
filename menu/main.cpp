@@ -69,6 +69,8 @@ int main(int argc, char **argv)
         std::cout << "Current crossing probability = " << crossProbability << std::endl;
         std::cout << "Current crossing method = " << crossingMethods[crossingMethod] << std::endl;
 
+        std::cout << "Current population size = " << populationSize << std::endl;
+
         if (stopCriterionSet) {
             std::cout << "Current stop criterion = " << stopCriterion << " seconds" << std::endl;
         } else {
@@ -371,7 +373,7 @@ void selectCrossingMethod(int &crossingMethod) {
     }
 
     crossingMethod = tempCrossingMethod - 1;
-    std::cout << "Crossing method set to: " << crossingMethod << std::endl;
+    std::cout << "Crossing method set to: " << crossingMethods[crossingMethod] << std::endl;
 }
 
 
@@ -451,6 +453,7 @@ void startGeneticAlgorithm(const vector<vector<int>> &data, vector<int> &path, c
         path = resultPath ;
         cout << "Cost: " << pathCost << endl;
         cout << "Best path found after: " << std::chrono::duration_cast<std::chrono::seconds>(timeElapsed).count() << " s" << endl;
+        cout << "Number of generations: " << geneticOX.getNumberOfGenerations() << endl;
         pathLoaded = true;
     } else {
         cout << "PMX crossing" << endl;

@@ -14,6 +14,9 @@ genetic::genetic(const std::vector<std::vector<int>>& matrix, const int stopCrit
     this->mutationProbability = mutationProbability;
     numberOfCities = static_cast<int>(matrix.size());
 
+    tournamentSize = static_cast<int>(populationSize * 0.3); // 30% of the population size
+    // tournamentSize = 10;
+
     populationCosts = std::vector<int>(populationSize);
 
     for (int i = 0; i < populationSize; i++) {
@@ -159,19 +162,6 @@ std::tuple<int, std::vector<int>, std::chrono::duration<float>> genetic::genetic
 std::vector<int> genetic::mutate(const std::vector<int>& path) const {
 
     // // reciprocal exchange mutation
-    // std::random_device rd;
-    // std::mt19937 mt(rd());
-    // std::uniform_int_distribution index(0, numberOfCities - 1);
-    // const int swapIndex1 = index(mt);
-    // int swapIndex2;
-    // do {
-    //     swapIndex2 = index(mt);
-    // } while (swapIndex1 == swapIndex2); // swapIndex1 and swapIndex2 must be different
-    // std::vector<int> mutatedPath = path;
-    // std::swap(mutatedPath[swapIndex1], mutatedPath[swapIndex2]); // swap two cities
-    // return mutatedPath;
-
-    // inversion mutation
     std::random_device rd;
     std::mt19937 mt(rd());
     std::uniform_int_distribution index(0, numberOfCities - 1);
@@ -181,12 +171,25 @@ std::vector<int> genetic::mutate(const std::vector<int>& path) const {
         swapIndex2 = index(mt);
     } while (swapIndex1 == swapIndex2); // swapIndex1 and swapIndex2 must be different
     std::vector<int> mutatedPath = path;
-    if (swapIndex1 < swapIndex2) {
-        std::reverse(mutatedPath.begin() + swapIndex1, mutatedPath.begin() + swapIndex2);
-    } else {
-        std::reverse(mutatedPath.begin() + swapIndex2, mutatedPath.begin() + swapIndex1);
-    }
+    std::swap(mutatedPath[swapIndex1], mutatedPath[swapIndex2]); // swap two cities
     return mutatedPath;
+
+    // inversion mutation
+    // std::random_device rd;
+    // std::mt19937 mt(rd());
+    // std::uniform_int_distribution index(0, numberOfCities - 1);
+    // const int swapIndex1 = index(mt);
+    // int swapIndex2;
+    // do {
+    //     swapIndex2 = index(mt);
+    // } while (swapIndex1 == swapIndex2); // swapIndex1 and swapIndex2 must be different
+    // std::vector<int> mutatedPath = path;
+    // if (swapIndex1 < swapIndex2) {
+    //     std::reverse(mutatedPath.begin() + swapIndex1, mutatedPath.begin() + swapIndex2);
+    // } else {
+    //     std::reverse(mutatedPath.begin() + swapIndex2, mutatedPath.begin() + swapIndex1);
+    // }
+    // return mutatedPath;
 
 }
 
