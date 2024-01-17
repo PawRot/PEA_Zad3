@@ -23,6 +23,7 @@ protected:
     long double crossoverProbability; // probability of crossover
     long double mutationProbability; // probability of mutation
     int numberOfGenerations = 0; // number of generations
+    int numberOfGenerationsWhenBestPathWasFound = 0; // number of generations when the best path was found
 
     std::vector<std::vector<int>> population; // current population
     std::vector<int> populationCosts; // costs of the paths in the population
@@ -54,6 +55,10 @@ public:
 
     [[nodiscard]] auto getNumberOfGenerations() const {
         return numberOfGenerations;
+    }
+
+    [[nodiscard]] auto getNumberOfGenerationsWhenBestPathWasFound() const {
+        return numberOfGenerationsWhenBestPathWasFound;
     }
 
 };

@@ -10,7 +10,7 @@ geneticOX::geneticOX(const std::vector<std::vector<int>> &matrix, const int stop
                                                                                                               crossoverProbability,
                                                                                                               mutationProbability){}
 
-std::pair<std::vector<int>, std::vector<int>> geneticOX::crossing(std::vector<int> parent1, std::vector<int> parent2) {
+std::pair<std::vector<int>, std::vector<int>> geneticOX::crossing(const std::vector<int> parent1, const std::vector<int> parent2) {
     std::random_device rd;
     std::mt19937 mt(rd());
     std::uniform_int_distribution<int> dist(0, numberOfCities - 1);
@@ -53,7 +53,6 @@ std::pair<std::vector<int>, std::vector<int>> geneticOX::crossing(std::vector<in
 
     }
 
-// wada
 
     return {offspring1, offspring2};
 }

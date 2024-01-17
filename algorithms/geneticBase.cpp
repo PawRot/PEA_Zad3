@@ -14,8 +14,7 @@ genetic::genetic(const std::vector<std::vector<int>>& matrix, const int stopCrit
     this->mutationProbability = mutationProbability;
     numberOfCities = static_cast<int>(matrix.size());
 
-    tournamentSize = static_cast<int>(populationSize * 0.3); // 30% of the population size
-    // tournamentSize = 10;
+    tournamentSize = 5;
 
     populationCosts = std::vector<int>(populationSize);
 
@@ -61,11 +60,6 @@ std::tuple<int, std::vector<int>, std::chrono::duration<float>> genetic::genetic
 
         std::vector<std::vector<int>> newPopulation; // container for the new population
 
-        // populationCosts.clear();
-        // // Selection for crossover
-        // for (const auto& path : population) { // calculate the costs of the paths in the population
-        //     populationCosts.push_back(pathCost(path));
-        // }
 
         // tournament selection
         for (int i = 0; i < populationSize; i++) {
@@ -97,9 +91,6 @@ std::tuple<int, std::vector<int>, std::chrono::duration<float>> genetic::genetic
 
         // crossover
         for (int i = 0; i < populationSize; i += 2) {
-            // std::random_device rd;
-            // std::mt19937 mt(rd());
-            // select two random parents from the parent population
             std::uniform_int_distribution index(0, populationSize - 1);
             const int parent1Index = index(mt);
             int parent2Index;
@@ -117,15 +108,11 @@ std::tuple<int, std::vector<int>, std::chrono::duration<float>> genetic::genetic
         }
 
         if (populationSize % 2 != 0) { // if the population size is odd, add one random path to the new population
-            // std::random_device rd;
-            // std::mt19937 mt(rd());
             std::uniform_int_distribution index(0, populationSize - 1);
             newPopulation.push_back(population[index(mt)]);
         }
 
         for (auto& path : newPopulation) { // mutate the paths
-            // std::random_device rd;
-            // std::mt19937 mt(rd());
             if (std::uniform_real_distribution dist(0.0, 1.0); dist(mt) < mutationProbability) { // if the mutation is to be performed
                 path = mutate(path);
             }
@@ -144,6 +131,7 @@ std::tuple<int, std::vector<int>, std::chrono::duration<float>> genetic::genetic
             bestSolution = {bestCostInNewPopulation, bestPathInNewPopulation, std::chrono::steady_clock::now() - start}; // save the best path
             // save the new best path cost and the time when it was found
             betterPathsAndTimes.push_back(std::to_string(bestCostInNewPopulation) + "," + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(std::get<2>(bestSolution)).count()));
+            numberOfGenerationsWhenBestPathWasFound = numberOfGenerations; // save the number of generations when the best path was found
         }
 
         population = newPopulation; // set the current population to the new population (full replacement)
@@ -161,7 +149,7 @@ std::tuple<int, std::vector<int>, std::chrono::duration<float>> genetic::genetic
 
 std::vector<int> genetic::mutate(const std::vector<int>& path) const {
 
-    // // reciprocal exchange mutation
+    // reciprocal exchange mutation (swap)
     std::random_device rd;
     std::mt19937 mt(rd());
     std::uniform_int_distribution index(0, numberOfCities - 1);
