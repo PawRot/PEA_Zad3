@@ -39,8 +39,10 @@ const vector<string> crossingMethods = {"OX", "PMX"};
 int main(int argc, char **argv)
 {
 
-    if(false) {
-        tester::run_tests("0", "1", "1000", "/Users/michal/Developer/Repozytoria/PEA_Zad3/data/ftv170.xml");
+    if(argc > 1 && argc < 6) {
+        cout << "Starting test mode" << endl;
+        const std::string crossover_type = argv[1], stop_criterion = argv[2], population_size = argv[3], filePath = argv[4];
+        tester::run_tests(crossover_type, stop_criterion, population_size, filePath);
         exit(0);
     }
 
