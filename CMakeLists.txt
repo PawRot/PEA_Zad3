@@ -14,14 +14,10 @@ add_executable(PEA_Zad3 menu/main.cpp
         data/dataGenerator.h
         data/fileOperator.cpp
         data/fileOperator.h
-        inheritance/parent.cpp
-        inheritance/parent.h
-        inheritance/childA.cpp
-        inheritance/childA.h
-        inheritance/childB.cpp
-        inheritance/childB.h
         algorithms/geneticOX.cpp
         algorithms/geneticOX.h
         algorithms/geneticPMX.cpp
-        algorithms/geneticPMX.h)
+        algorithms/geneticPMX.h
+        tests/tester.cpp
+        tests/tester.h)
 
