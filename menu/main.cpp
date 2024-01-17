@@ -3,6 +3,7 @@
 #include "../data/dataGenerator.h"
 #include "../algorithms/geneticOX.h"
 #include "../algorithms/geneticPMX.h"
+#include "../tests/tester.h"
 
 using std::vector, std::string, std::cout, std::cin, std::endl;
 
@@ -37,6 +38,11 @@ const vector<string> crossingMethods = {"OX", "PMX"};
 
 int main(int argc, char **argv)
 {
+
+    if(false) {
+        tester::run_tests("0", "1", "1000", "/Users/michal/Developer/Repozytoria/PEA_Zad3/data/ftv170.xml");
+        exit(0);
+    }
 
     // if (true) {
     //     for (int i = 0; i < 10; i++) {
