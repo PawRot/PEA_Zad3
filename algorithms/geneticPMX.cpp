@@ -38,7 +38,7 @@ std::pair<std::vector<int>, std::vector<int>> geneticPMX::crossing(const std::ve
     std::copy(parent2.begin() + rangeStart, parent2.begin() + rangeEnd + 1, offspring2.begin() + rangeStart);
 
     // copy cities outside of range from parent2 to offspring1, and from parent1 to offspring2
-    for (int i = 0; i < numberOfCities-1; ++i) { //TODO: Remove -1
+    for (int i = 0; i < numberOfCities; ++i) {
         if (i >= rangeStart && i <= rangeEnd) {
             continue;
         }
@@ -53,41 +53,47 @@ std::pair<std::vector<int>, std::vector<int>> geneticPMX::crossing(const std::ve
 
 
 
-    // copy cities from range from parent2 to offspring1, and from parent1 to offspring2
-    for(int i = 0, j = 0; i < parent2.size() && j < parent2.size(); ++i) {
-        if (offspring1[i] != -1) {
-            continue;
-        }
+    std::unordered_map<int,int> map1, map2;
 
-        while (j < parent2.size()) {
-            if (std::find(offspring1.begin(), offspring1.end(), j) != offspring1.end()) {
-                j++;
-                continue;
-            }
-            break;
-        }
-
-        offspring1[i] = j;
-        j++;
+    for (int i = rangeStart; i <= rangeEnd; ++i) {
+        map1[parent1[i]] = parent2[i];
+        map2[parent2[i]] = parent1[i];
     }
 
-    for(int i = 0, j = 0; i < parent1.size() && j < parent1.size(); ++i) {
-        if (offspring2[i] != -1) {
-            continue;
-        }
 
-        while (j < parent1.size()) {
-            if (std::find(offspring2.begin(), offspring2.end(), j) != offspring2.end()) {
-                j++;
-                continue;
+    for (int i = rangeStart; i <= rangeEnd; ++i) {
+        if (std::find(offspring1.begin(), offspring1.end(), offspring2[i]) == offspring1.end()) {
+            int value = offspring1[i];
+            if (map2.contains(value)) {
+                while (map2.contains(value)) {
+                    value = map2[value];
+                }
             }
-            break;
+            auto it = std::find(parent2.begin(), parent2.end(), value);
+            int index = it - parent2.begin();
+
+            offspring1[index] = offspring2[i];
         }
 
-        offspring2[i] = j;
-        j++;
+        if (std::find(offspring2.begin(), offspring2.end(), offspring1[i]) == offspring2.end()) {
+            int value = offspring2[i];
+            if (map1.contains(value)) {
+                while (map1.contains(value)) {
+                    value = map1[value];
+                }
+            }
+            auto it = std::find(parent1.begin(), parent1.end(), value);
+            int index = it - parent1.begin();
+
+            offspring2[index] = offspring1[i];
+        }
+
+
+
     }
+
 
 
     return {offspring1, offspring2};
 }
+
