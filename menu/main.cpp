@@ -46,51 +46,6 @@ int main(int argc, char **argv)
         exit(0);
     }
 
-    // if (true) {
-    //     for (int i = 0; i < 10; i++) {
-    //         cout << "OX, pop. 1000, time: 30s, tournament: 0.3 * pop" << endl;
-    //         auto data = fileOperator::loadXMLDataFromFile(R"(/Users/michal/Developer/Repozytoria/PEA_Zad3/data/rbg403.xml)");
-    //         geneticOX geneticOX(data, 240, 1000, 0.8, 0.01);
-    //         auto result = geneticOX.geneticAlgorithm();
-    //         cout << "Cost: " << std::get<0>(result) << endl;
-    //         cout << "Best path found after: " << std::chrono::duration_cast<std::chrono::seconds>(std::get<2>(result)).count() << " s" << endl;
-    //         cout << "Number of generations when best path was found: " << geneticOX.getNumberOfGenerationsWhenBestPathWasFound() << endl;
-    //         cout << "Number of generations: " << geneticOX.getNumberOfGenerations() << endl << endl;
-    //     }
-    //     for (int i = 0; i < 10; i++) {
-    //         cout << "OX, pop. 5000, time: 30s, tournament: 0.3 * pop" << endl;
-    //         auto data = fileOperator::loadXMLDataFromFile(R"(/Users/michal/Developer/Repozytoria/PEA_Zad3/data/rbg403.xml)");
-    //         geneticOX geneticOX(data, 30, 5000, 0.8, 0.01);
-    //         auto result = geneticOX.geneticAlgorithm();
-    //         cout << "Cost: " << std::get<0>(result) << endl;
-    //         cout << "Best path found after: " << std::chrono::duration_cast<std::chrono::seconds>(std::get<2>(result)).count() << " s" << endl;
-    //         cout << "Number of generations when best path was found: " << geneticOX.getNumberOfGenerationsWhenBestPathWasFound() << endl;
-    //         cout << "Number of generations: " << geneticOX.getNumberOfGenerations() << endl << endl;
-    //     }
-    //
-    //     for (int i = 0; i < 10; i++) {
-    //         cout << "PMX, pop. 1000, time: 30s, tournament: 0.3 * pop" << endl;
-    //         auto data = fileOperator::loadXMLDataFromFile(R"(//Users/michal/Developer/Repozytoria/PEA_Zad3/data/rbg403.xml)");
-    //         geneticPMX geneticPMX(data, 30, 1000, 0.8, 0.01);
-    //         auto result = geneticPMX.geneticAlgorithm();
-    //         cout << "Cost: " << std::get<0>(result) << endl;
-    //         cout << "Best path found after: " << std::chrono::duration_cast<std::chrono::seconds>(std::get<2>(result)).count() << " s" << endl;
-    //         cout << "Number of generations when best path was found: " << geneticPMX.getNumberOfGenerationsWhenBestPathWasFound() << endl;
-    //         cout << "Number of generations: " << geneticPMX.getNumberOfGenerations() << endl << endl;
-    //
-    //     }
-    //     for (int i = 0; i < 10; i++) {
-    //         cout << "PMX, pop. 5000, time: 30s, tournament: 0.3 * pop" << endl;
-    //         auto data = fileOperator::loadXMLDataFromFile(R"(/Users/michal/Developer/Repozytoria/PEA_Zad3/data/rbg403.xml)");
-    //         geneticPMX geneticPMX(data, 30, 5000, 0.8, 0.01);
-    //         auto result = geneticPMX.geneticAlgorithm();
-    //         cout << "Cost: " << std::get<0>(result) << endl;
-    //         cout << "Best path found after: " << std::chrono::duration_cast<std::chrono::seconds>(std::get<2>(result)).count() << " s" << endl;
-    //         cout << "Number of generations when best path was found: " << geneticPMX.getNumberOfGenerationsWhenBestPathWasFound() << endl;
-    //         cout << "Number of generations: " << geneticPMX.getNumberOfGenerations() << endl << endl;
-    //
-    //     }
-    // }
 
     if (argc > 1 && std::string(argv[1]) == "testMode") {
 
