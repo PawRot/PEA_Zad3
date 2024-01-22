@@ -6,6 +6,7 @@
 #define GENETICPMX_H
 
 #include "geneticBase.h"
+#include <unordered_map>
 
 
 
