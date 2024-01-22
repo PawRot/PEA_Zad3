@@ -1,6 +1,3 @@
-//
-// Created by Michał Zychowicz on 17/01/2024.
-//
 
 #include "tester.h"
 

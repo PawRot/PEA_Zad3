@@ -1,6 +1,3 @@
-//
-// Created by Michał Zychowicz on 14/01/2024.
-//
 
 #ifndef GENETICPMX_H
 #define GENETICPMX_H

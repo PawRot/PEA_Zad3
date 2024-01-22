@@ -1,6 +1,3 @@
-//
-// Created by Michał Zychowicz on 17/01/2024.
-//
 
 #ifndef TESTER_H
 #define TESTER_H
